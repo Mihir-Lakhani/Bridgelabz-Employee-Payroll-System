@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class PayrollExceptionHandler {
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<Map<String, String>> notFound(EmployeeNotFoundException error) {
+        return ResponseEntity.status(404).body(Map.of("error", error.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> invalidRequest(MethodArgumentNotValidException error) {
         String message = error.getBindingResult().getFieldErrors().stream()
