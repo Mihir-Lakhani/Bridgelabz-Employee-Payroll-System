@@ -1,10 +1,10 @@
 package com.bridgelabz.employeepayrollapp.service;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDto;
+import com.bridgelabz.employeepayrollapp.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeepayrollapp.model.EmployeePayroll;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class EmployeePayrollService {
 
     public synchronized EmployeePayroll get(long id) {
         return employees.stream().filter(employee -> employee.getId() == id).findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Employee not found: " + id));
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     public synchronized EmployeePayroll create(EmployeePayrollDto request) {
